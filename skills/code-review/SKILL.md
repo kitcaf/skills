@@ -1,5 +1,5 @@
 ---
-name: core-code-review-rules
+name: code-review
 description: 核心代码审查规范。侧重于代码的模块化评估以及性能逻辑优化。仅提供审阅诊断与优化方案，严禁直接修改或重构代码。
 allowed-tools: Read
 ---

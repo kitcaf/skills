@@ -14,11 +14,12 @@
 11. 长列表虚拟化 (Virtualization)
 12. 路由与组件级代码分割 (Code Splitting)
 13. 状态过渡 (useTransition)
+14. 巨型组件拆分规范 (Component Decomposition)
 
 ---
 
 ## 组件与目录架构规范 (Directory Architecture)
-
+ 
 严禁将所有的组件、逻辑、样式全部堆砌在一个文件夹（如 `src/components`）中。随着项目变大，必须按照“业务功能（Feature）”或“职责”进行模块化拆分。
 
 * **规范**：推荐使用基于功能的目录划分（Feature-based Structure）。
@@ -289,4 +290,37 @@ function SearchPage() {
 }
 ```
 
-***
+## 巨型组件拆分规范 (Component Decomposition)
+
+严禁写出动辄几百上千行的“巨型组件” (Monster Component)，也严禁为了省事将多个本该独立的子组件全部堆砌在同一个单一文件（脚本）中。这会导致代码可读性极差、极易引发冲突且难以维护。
+
+红线：单个组件文件代码尽量不超过 300 行。
+
+规范：必须遵循“单一职责原则”对复杂 UI 进行物理拆分。将 Header、Sidebar、Table、Form、Modal 等独立区块抽离成单独的 .tsx 文件。如果是仅属于当前业务线的专属子组件，应当在此业务目录下新建一个 components/ 文件夹进行就近管理。主组件（父组件）应该像一个“组装车间”，只负责引入拼装和调度，坚决不写所有具体的 UI 细节。
+
+**Good:**
+
+```tsx
+// 错误示范：将头部、侧边栏、图表全写在同一个 Dashboard.tsx 里。
+// 正确示范：将各个区块拆分为独立文件，主文件只负责简洁组装。
+import { DashboardHeader } from './components/DashboardHeader';
+import { UserStatistics } from './components/UserStatistics';
+import { RecentActivity } from './components/RecentActivity';
+
+export default function Dashboard() {
+  const { data, isLoading } = useDashboardData(); // 逻辑已抽离
+
+  if (isLoading) return <Spinner />;
+
+  return (
+    <div className="dashboard-layout">
+      {/* 仅仅在此处调用，细节隐藏在子组件内部 */}
+      <DashboardHeader user={data.user} />
+      <main>
+        <UserStatistics stats={data.stats} />
+        <RecentActivity activities={data.activities} />
+      </main>
+    </div>
+  );
+}
+```

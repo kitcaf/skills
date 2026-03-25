@@ -27,4 +27,4 @@ allowed-tools: Write
 
 根据当前处理的任务类型或代码语言，**必须先自动加载并阅读**对应的底层规范文件。为了保持上下文聚焦，**仅读取与当前任务匹配的文件（如果不存在匹配的文件则取消）**：
 
-* **React (前端/UI/Hooks)**: 当处理 `.jsx`, `.tsx` 文件，或涉及前端组件、状态管理时 → See [./reference/react.md](./reference/react.md)
+* **React (前端/UI/Hooks)**: 当处理 `.jsx`, `.tsx` 文件，或涉及前端组件、状态管理时 → See [./references/react.md](./references/react.md)

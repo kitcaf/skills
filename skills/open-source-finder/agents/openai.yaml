@@ -1,0 +1,4 @@
+interface:
+  display_name: "Open Source Finder"
+  short_description: "Find fitting open-source projects to contribute to"
+  default_prompt: "Use $open-source-finder to find open-source projects I can sustainably contribute to in my chosen direction."
